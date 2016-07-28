@@ -5,10 +5,10 @@
 #     strategy_description: a string
 #     move: A function that returns 'c' or 'b'
 ####
-import random
-team_name = 'The name the team gives to itself' # Only 10 chars displayed.
-strategy_name = 'The name the team gives to this strategy'
-strategy_description = 'How does this strategy decide?'
+
+team_name = 'The Lone Wolf' # Only 10 chars displayed.
+strategy_name = 'Make sure I cannot lose 1v1'
+strategy_description = 'The biggest difference in our scores for any one round is 600 points, which only happens if I collude. I only want to ever do this if I am ahead by 601 points.'
     
 def move(my_history, their_history, my_score, their_score):
     ''' Arguments accepted: my_history, their_history are strings.
@@ -17,26 +17,6 @@ def move(my_history, their_history, my_score, their_score):
     Make my move.
     Returns 'c' or 'b'. 
     '''
-    runningTally = 0
-    
-    if len(my_history) < 50:
-        ranNum = random.choice([0,1])
-        if ranNum == 0:
-            return 'c'
-        else:
-            return 'b'    
-    else:
-        for choice in their_history:
-            if choice == 'b':
-                runningTally -= 1
-            else:
-                runningTally += 1
-        if runningTally >=0:
-            return 'c'
-        else:
-            return 'b'
-        
-
 
     # my_history: a string with one letter (c or b) per round that has been played with this opponent.
     # their_history: a string of the same length as history, possibly empty. 
@@ -46,7 +26,12 @@ def move(my_history, their_history, my_score, their_score):
     # Analyze my_history and their_history and/or my_score and their_score.
     # Decide whether to return 'c' or 'b'.
     
+    # If the other player has betrayed or this is the last half of the game, 
     
+    if my_score <= (their_score + 601):
+        return 'b'       #Betray as long as I'm winning by at least 601 points
+    else:
+        return 'c'       # collude if I am winning by 601 points
 
     
 def test_move(my_history, their_history, my_score, their_score, result):
@@ -68,15 +53,15 @@ def test_move(my_history, their_history, my_score, their_score, result):
 if __name__ == '__main__':
      
     # Test 1: Betray on first move.
-    if test_move(my_history='ccccccccc',
-              their_history='bbbbbbbbbb', 
+    if test_move(my_history='',
+              their_history='', 
               my_score=0,
               their_score=0,
               result='b'):
          print 'Test passed'
      # Test 2: Continue betraying if they collude despite being betrayed.
-    test_move(my_history='ccccccccc',
-              their_history='cccbbbbbbbbbbbb', 
+    test_move(my_history='bbb',
+              their_history='ccc', 
               # Note the scores are for testing move().
               # The history and scores don't need to match unless
               # that is relevant to the test of move(). Here,
