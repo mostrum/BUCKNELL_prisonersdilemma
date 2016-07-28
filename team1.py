@@ -1,4 +1,4 @@
-####
+####BLAH BLAH BLAH
 # Each team's file must define four tokens:
 #     team_name: a string
 #     strategy_name: a string
