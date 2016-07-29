@@ -6,7 +6,7 @@
 #     move: A function that returns 'c' or 'b'
 ####
 
-# This is a change to the file
+# This is a change to the file. It is a new comment
 
 team_name = 'The name the team gives to itself' # Only 10 chars displayed.
 strategy_name = 'The name the team gives to this strategy'
